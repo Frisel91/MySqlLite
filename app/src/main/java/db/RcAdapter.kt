@@ -52,4 +52,11 @@ class RcAdapter(listMain: ArrayList<ListItem>, contextM: Context) : RecyclerView
         notifyDataSetChanged()
 
     }
+
+    fun removeItem(pos:Int, dbManager: MyDbManager){            //удаляем из адаптера
+        dbManager.deleteFromDB(listArray[pos].id.toString())
+        listArray.removeAt(pos)
+        notifyItemRangeChanged(0, listArray.size)
+        notifyItemRemoved(pos)
+    }
 }

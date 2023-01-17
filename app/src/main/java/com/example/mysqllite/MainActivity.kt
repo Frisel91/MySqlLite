@@ -5,7 +5,9 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
 import androidx.constraintlayout.helper.widget.Carousel.Adapter
+import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import db.MyDbManager
 import db.RcAdapter
 import kotlinx.android.synthetic.main.activity_main.*
@@ -36,6 +38,8 @@ class MainActivity : AppCompatActivity() {
 
     fun init(){
         rcView.layoutManager = LinearLayoutManager(this)
+        val swapHelper = getShwap()
+        swapHelper.attachToRecyclerView(rcView)
         rcView.adapter = rcAdapter
     }
 
@@ -47,5 +51,22 @@ class MainActivity : AppCompatActivity() {
         }else{
             tvNoElements.visibility = View.GONE
         }
+    }
+
+    private fun getShwap(): ItemTouchHelper{
+        return (ItemTouchHelper(object: ItemTouchHelper.SimpleCallback(0,ItemTouchHelper.RIGHT){
+            override fun onMove(
+                recyclerView: RecyclerView,
+                viewHolder: RecyclerView.ViewHolder,
+                target: RecyclerView.ViewHolder
+            ): Boolean {
+                return false
+            }
+
+            override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
+                rcAdapter.removeItem(viewHolder.adapterPosition, myDbManager)
+            }
+
+        }))
     }
 }

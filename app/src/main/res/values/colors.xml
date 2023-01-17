@@ -9,4 +9,5 @@
     <color name="white">#FFFFFFFF</color>
     <color name="dark_blue">#1B297A</color>
     <color name="constrain">#62706E</color>
+    <color name="item_color">#B8A892</color>
 </resources>
